@@ -60,22 +60,24 @@ int main()
 
 	GLfloat vertices[] =
 	{
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f
+		-0.5f, -0.5f,  // Lower left
+		 0.5f, -0.5f,  // Lower right
+		 0.5f,  0.5f,  // Upper right
+		-0.5f,  0.5f,  // Upper left
 	};
 
-	GLuint vao, vbo;
+	GLuint VAOs[1] = { 0 };
+	GLuint VBOs[1] = { 0 };
 
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
+	glGenVertexArrays(1, VAOs);
+	glGenBuffers(1, VBOs);
 
-	glBindVertexArray(vao);
+	glBindVertexArray(VAOs[0]);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -87,15 +89,15 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shader_program);
-		glBindVertexArray(vao);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindVertexArray(VAOs[0]);
+		glDrawArrays(GL_LINE_LOOP, 0, 4);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-	glDeleteBuffers(1, &vbo);
-	glDeleteVertexArrays(1, &vao);
+	glDeleteBuffers(1, VBOs);
+	glDeleteVertexArrays(1, VAOs);
 	glDeleteProgram(shader_program);
 
 	glfwDestroyWindow(window);
