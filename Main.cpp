@@ -62,17 +62,14 @@ int main()
 	{
 		-0.5f, -0.5f, 0.0f,  // Lower left
 		0.5f, -0.5f, 0.0f,  // Lower right
-		0.0f, 0.5f, 0.0f,  // Top
-		-0.25f, 0.0f, 0.0f,  // Middle left
-		0.0f, -0.5f, 0.0f,  // Middle bottom
-		0.25f, 0.0f, 0.0f  // Middle right
+		0.5f, 0.5f, 0.0f,  // Upper right
+		-0.5f, 0.5f, 0.0f  // Upper left
 	};
 
 	GLuint indices[] =
 	{
-		0, 4, 3,  // Lower left triangle
-		4, 1, 5,  // Lower right triangle
-		3, 5, 2  // Top triangle
+		0, 1, 2,
+		2, 3, 0
 	};
 
 	GLuint VAO, VBO, EBO;
@@ -103,7 +100,7 @@ int main()
 
 		glUseProgram(shader_program);
 		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
